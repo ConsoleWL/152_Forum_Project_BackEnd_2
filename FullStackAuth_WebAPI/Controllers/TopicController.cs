@@ -27,6 +27,7 @@ namespace FullStackAuth_WebAPI.Controllers
             {
                 List<Topic> topics = _context.Topics.Include(u=>u.User)
                                                     .Include(c=>c.Comments)
+                                                    .ThenInclude(c=>c.User)
                                                     .ToList();
                 
 
@@ -46,10 +47,10 @@ namespace FullStackAuth_WebAPI.Controllers
                         Likes = c.Likes,
                         Text = c.Text,
                         TimePosted = c.TimePosted,
-                        //User = new UserNameDto
-                        //{
-                        //    UserName = c.User.UserName
-                        //}
+                        User = new UserNameDto
+                        {
+                            UserName = c.User.UserName
+                        }
                     }).ToList()
                     
                 }).ToList();
@@ -71,6 +72,7 @@ namespace FullStackAuth_WebAPI.Controllers
             {
                 var topic = _context.Topics.Include(u => u.User)
                                            .Include(c => c.Comments)
+                                           .ThenInclude(c => c.User)
                                            .FirstOrDefault(topic => topic.TopicId == id);
 
                 var user = _context.Users.FirstOrDefault(u => u.Id == topic.UserId);
@@ -133,7 +135,7 @@ namespace FullStackAuth_WebAPI.Controllers
 
                 _context.SaveChanges();
 
-                return StatusCode(500, topic);
+                return StatusCode(201, topic);
 
             }
             catch (Exception ex)

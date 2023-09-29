@@ -56,8 +56,10 @@ namespace FullStackAuth_WebAPI.Controllers
                         Text = c.Text,
                         TimePosted = c.TimePosted,
                         Likes = c.Likes,
-                        // Need to add here a User
-                        // User =
+                        User = new UserNameDto
+                        {
+                            UserName = c.User.UserName
+                        },
 
                     }).ToList()
                 };

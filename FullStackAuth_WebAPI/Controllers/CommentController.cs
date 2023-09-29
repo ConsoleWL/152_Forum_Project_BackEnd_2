@@ -1,13 +1,15 @@
 ﻿using FullStackAuth_WebAPI.Data;
+using FullStackAuth_WebAPI.DataTransferObjects;
 using FullStackAuth_WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace FullStackAuth_WebAPI.Controllers
 {
-    [Route("api/topics/{topicId}/comment")]
+    [Route("api/comment")]
     [ApiController]
     public class CommentController : ControllerBase
     {
@@ -18,15 +20,15 @@ namespace FullStackAuth_WebAPI.Controllers
             _context = context;
         }
 
-        //get all comments by topicId
-
-        // get all comments by UserId
+        // get all comments by UserId in the profile
 
         [HttpGet("id")]
         public IActionResult Get(int topicId, int id)
         {
             try
             {
+
+                
                 return Ok();
             }
             catch (Exception ex)
@@ -53,6 +55,73 @@ namespace FullStackAuth_WebAPI.Controllers
                 _context.SaveChanges();
 
                 return StatusCode(201, comment);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}"), Authorize]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var comment = _context.Comments.FirstOrDefault(c => c.CommentId == id);
+                if (comment is null)
+                    return NotFound();
+
+                var userId = User.FindFirstValue("id");
+                if (string.IsNullOrEmpty(userId) || comment.UserId != userId)
+                    return Unauthorized();
+
+                _context.Comments.Remove(comment);
+                _context.SaveChanges();
+
+                return StatusCode(204);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("{id}"), Authorize]
+        public IActionResult Put(int id, [FromBody] Comment comment)
+        {
+            try
+            {
+                var existComment = _context.Comments.Include(o => o.User)
+                                                    .Include(t => t.Topic)
+                                                    .FirstOrDefault(f => f.CommentId == id);
+                if (existComment is null)
+                    return NotFound();
+
+                string userId = User.FindFirstValue("id");
+
+                if (string.IsNullOrEmpty(userId) || existComment.UserId != userId)
+                    return Unauthorized();
+
+                existComment.Text = comment.Text;
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                _context.SaveChanges();
+
+                var existingCommentDto = new CommentsForDisplayDto
+                {
+                    CommentId = existComment.CommentId,
+                    Text = existComment.Text,
+                    TimePosted = existComment.TimePosted,
+                    Likes = existComment.Likes,
+                    User = new UserNameDto
+                    {
+                        UserName = existComment.User.UserName
+                    }
+                };
+
+                return StatusCode(201, existingCommentDto);
             }
             catch (Exception ex)
             {
