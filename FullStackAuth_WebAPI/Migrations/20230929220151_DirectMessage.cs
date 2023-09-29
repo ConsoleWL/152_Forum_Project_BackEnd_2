@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace FullStackAuth_WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class DirectMessage : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,7 +69,9 @@ namespace FullStackAuth_WebAPI.Migrations
                 {
                     DirectMessageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Text = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
+                    Text = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
+                    UserIdTo = table.Column<string>(type: "longtext", nullable: true),
+                    UserIdFrom = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -270,8 +272,8 @@ namespace FullStackAuth_WebAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "b9873142-a1eb-41f5-a3ff-538613880274", null, "User", "USER" },
-                    { "e13d4a86-a469-4cc6-96ed-831d3cc94f78", null, "Admin", "ADMIN" }
+                    { "625d12ed-1968-4efa-92d1-47a301028927", null, "User", "USER" },
+                    { "8d13e966-2cc9-42df-9660-6d7802294a7c", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

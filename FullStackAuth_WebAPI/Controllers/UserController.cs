@@ -133,5 +133,27 @@ namespace FullStackAuth_WebAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("mess"), Authorize]
+        public IActionResult Get()
+        {
+            try
+            {
+                string userId = User.FindFirstValue("id");
+                if (string.IsNullOrEmpty(userId))
+                    return Unauthorized();
+
+                var messages = _context.DirectMessages.Where(m => m.UserIdTo == userId).ToList();
+
+                return Ok(messages);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
     }
 }

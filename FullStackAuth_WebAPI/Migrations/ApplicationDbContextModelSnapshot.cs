@@ -75,6 +75,12 @@ namespace FullStackAuth_WebAPI.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
+                    b.Property<string>("UserIdFrom")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserIdTo")
+                        .HasColumnType("longtext");
+
                     b.HasKey("DirectMessageId");
 
                     b.ToTable("DirectMessages");
@@ -217,13 +223,13 @@ namespace FullStackAuth_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b9873142-a1eb-41f5-a3ff-538613880274",
+                            Id = "625d12ed-1968-4efa-92d1-47a301028927",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "e13d4a86-a469-4cc6-96ed-831d3cc94f78",
+                            Id = "8d13e966-2cc9-42df-9660-6d7802294a7c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

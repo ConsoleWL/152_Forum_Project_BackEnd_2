@@ -22,14 +22,15 @@ namespace FullStackAuth_WebAPI.Controllers
 
         // get all comments by UserId in the profile
 
-        [HttpGet("id")]
-        public IActionResult Get(int topicId, int id)
+        [HttpGet("user/{userId}")]
+        public IActionResult Get(string userId)
         {
             try
             {
+                var comments = _context.Comments.Where(c => c.UserId == userId).ToList();
 
                 
-                return Ok();
+                return Ok(comments);
             }
             catch (Exception ex)
             {

@@ -7,6 +7,132 @@
 	},
 	"item": [
 		{
+			"name": "Comments Copy",
+			"item": [
+				{
+					"name": "Post a Comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InNhbWhlbmtlbCIsImVtYWlsIjoic2FtaGVua2VsQGdtYWlsLmNvbSIsImlkIjoiMjdjMWM5ZTctZGNlNy00ZGZkLTg1MGMtZGE4YTAxZGRlYzk5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTY5NjA4MjIyMCwiaXNzIjoiRnVsbFN0YWNrQXV0aF9XZWJBUEkiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.WKFKsNuH5GObT-aTWjR0SAhXHdAjMJxfziS2t1kLTNk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n\r\n{\r\n    \"text\":\"Just a comment of the \",\r\n    \"topicid\": 3,\r\n    \"userId\":\"27c1c9e7-dce7-4dfd-850c-da8a01ddec99\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/comment",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImJvYiIsImVtYWlsIjoiYm9iQGJvYi5ib2IiLCJpZCI6IjFmNTZkYjQ1LWEyMjYtNGZlNi05MDgxLWUzOTlhNzZjNWJmMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE2OTYwODIxMDYsImlzcyI6IkZ1bGxTdGFja0F1dGhfV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.DXIw3w6AtlBuBLShFqTkos2bytpHxe5j610ja54jgzQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://localhost:5001/api/comment/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"comment",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comments by user ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/comment/user/c6916058-a06a-44aa-9186-a9e5fae6e081",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"comment",
+								"user",
+								"c6916058-a06a-44aa-9186-a9e5fae6e081"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment by Id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im5pa29iZXIiLCJlbWFpbCI6Im5pa29iZXJAZ21haWwuY29tIiwiaWQiOiI5ZDU1MGE2Ni01ZDFjLTQ4YWItYWEzZC05NmM1ZmU0NzlhMDAiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjk2MDIzNjMxLCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.C1o8DRtWRXDZz-F2WwqPDrbCYWfyJC3YmX1bt3ZyiGw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\":\"Updated Comment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/comment/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"comment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Authentication",
 			"item": [
 				{
@@ -155,8 +281,159 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get messages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:5001/api/user/messages",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"user",
+										"messages"
+									]
+								}
+							},
+							"response": []
 						}
 					]
+				},
+				{
+					"name": "User by Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik5pa29iZXIiLCJlbWFpbCI6Im5pa29iZXJAZ21haWwuY29tIiwiaWQiOiJjNjkxNjA1OC1hMDZhLTQ0YWEtOTE4Ni1hOWU1ZmFlNmUwODEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjk2MDQ0NjUzLCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.ZJXuYfrArh8yzdKAjZDzKpCr64prOQUvI2ZsvZS296M",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:5001/api/user/c6916058-a06a-44aa-9186-a9e5fae6e081",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"user",
+								"c6916058-a06a-44aa-9186-a9e5fae6e081"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User by Id",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im5pa29iZXIiLCJlbWFpbCI6Im5pa29iZXJAZ21haWwuY29tIiwiaWQiOiJjNjkxNjA1OC1hMDZhLTQ0YWEtOTE4Ni1hOWU1ZmFlNmUwODEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjk2MDQ0MzY1LCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.Tqbyp7cJ0GPg-ezmoZIxHishZY596XaEXB8lXtBP2TY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"Nikober\",\r\n    \"firstname\":\"Nikita\",\r\n    \"lastname\":\"OberUpdated\",\r\n    \"profilepicture\":\"\",\r\n    \"email\":\"nikober@gmail.com\"\r\n}\r\n\r\n// {\r\n//     \"username\":\"Nikober\",\r\n//     \"firstname\":\"Nikita\",\r\n//     \"lastname\":\"Ober\",\r\n//     \"profilepicture\":\"\",\r\n//     \"email\":\"nikober@gmail.com\"\r\n// }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/user/c6916058-a06a-44aa-9186-a9e5fae6e081",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"user",
+								"c6916058-a06a-44aa-9186-a9e5fae6e081"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InNhbWhlbmtlbCIsImVtYWlsIjoic2FtaGVua2VsQGdtYWlsLmNvbSIsImlkIjoiMTIxYjIzNTAtZmZiNS00YjRmLThmMzgtM2ZiNTM2MTI1YjAzIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTY5NjA0NDU3MywiaXNzIjoiRnVsbFN0YWNrQXV0aF9XZWJBUEkiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.XXWhZW-rRbYT7LTDCdi2sn41Sr7VwUweh1SPnP2rgG0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:5001/api/user/121b2350-ffb5-4b4f-8f38-3fb536125b03",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"user",
+								"121b2350-ffb5-4b4f-8f38-3fb536125b03"
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Register_User",
@@ -296,6 +573,109 @@
 							"path": [
 								"api",
 								"topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Topic",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Im5pa29iZXIiLCJlbWFpbCI6Im5pa29iZXJAZ21haWwuY29tIiwiaWQiOiI5ZDU1MGE2Ni01ZDFjLTQ4YWItYWEzZC05NmM1ZmU0NzlhMDAiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjk1OTk1OTI3LCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.eDe7P3PsfX_2zADoQWm4EFhohR4RWYFMRyOAFFaRJB0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Updated Crypto\",\r\n    \"text\":\"Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/topic/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"topic",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Topic by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik5pa29iZXIiLCJlbWFpbCI6Im5pa29iZXJAZ21haWwuY29tIiwiaWQiOiJjNjkxNjA1OC1hMDZhLTQ0YWEtOTE4Ni1hOWU1ZmFlNmUwODEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjk2MDcwMDYwLCJpc3MiOiJGdWxsU3RhY2tBdXRoX1dlYkFQSSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.QS2pwwV5myC5VbOGbvp9bIXOFv1pycMAVjjpLMC0QA4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:5001/api/topic/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"topic",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DirectMessages",
+			"item": [
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InNhbWhlbmtlbCIsImVtYWlsIjoic2FtaGVua2VsQGdtYWlsLmNvbSIsImlkIjoiYTg5ODcyMGEtNDFjMS00MTBmLTgzYjctMGFlN2M0MmUwZjMyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTY5NjA5ODk2MywiaXNzIjoiRnVsbFN0YWNrQXV0aF9XZWJBUEkiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.X0dzX6IpuMTg1dp_p3b2WlXYxRFj1QcpLuaaJESMBes",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\":\"message from past\",\r\n    \"useridto\":\"817dc425-54e4-4f72-a8d6-1d835b567396\"\r\n}\r\n\r\n// {\r\n//     \"text\":\"message from past\",\r\n//     \"useridto\":\"7209de31-4a47-44c0-a126-2a2df0dd6b4b\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/DirectMessage",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"DirectMessage"
 							]
 						}
 					},
