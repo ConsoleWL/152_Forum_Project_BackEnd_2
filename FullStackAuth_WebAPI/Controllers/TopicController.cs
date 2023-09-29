@@ -25,14 +25,38 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-                List<Topic> topics = _context.Topics.ToList();
+                List<Topic> topics = _context.Topics.Include(u=>u.User)
+                                                    .Include(c=>c.Comments)
+                                                    .ToList();
+                
 
-                //var topicsDto = new List<TopicsForDisplayDto>
-                //{
-                //    TopicId = topics.TopicId 
-                //};
+                var topicsDto = topics.Select(t => new TopicsForDisplayDto
+                {
+                    TopicId = t.TopicId,
+                    Title = t.Title,
+                    TimePosted = t.TimePosted,
+                    Likes = t.Likes,
+                    Text = t.Text,
+                    User = new UserNameDto
+                    {
+                        UserName = t.User.UserName
+                    },
+                    Comments = t.Comments.Select(c => new  CommentsForDisplayDto{
+                        CommentId = c.CommentId,
+                        Likes = c.Likes,
+                        Text = c.Text,
+                        TimePosted = c.TimePosted,
+                        //User = new UserNameDto
+                        //{
+                        //    UserName = c.User.UserName
+                        //}
+                    }).ToList()
+                    
+                }).ToList();
 
-                return Ok(topics);
+
+
+                return Ok(topicsDto);
             }
             catch (Exception ex)
             {
@@ -74,7 +98,10 @@ namespace FullStackAuth_WebAPI.Controllers
                         Text = c.Text,
                         TimePosted = c.TimePosted,
                         Likes = c.Likes,
-                       // User = //User = c.User.UserName
+                        User = new UserNameDto
+                        {
+                            UserName = c.User.UserName
+                        }
 
                     }).ToList()
                 };
