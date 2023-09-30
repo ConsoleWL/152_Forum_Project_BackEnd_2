@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace FullStackAuth_WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class DirectMessage : Migration
+    public partial class Init3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,22 +60,6 @@ namespace FullStackAuth_WebAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "DirectMessages",
-                columns: table => new
-                {
-                    DirectMessageId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Text = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
-                    UserIdTo = table.Column<string>(type: "longtext", nullable: true),
-                    UserIdFrom = table.Column<string>(type: "longtext", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DirectMessages", x => x.DirectMessageId);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -191,6 +175,32 @@ namespace FullStackAuth_WebAPI.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "DirectMessages",
+                columns: table => new
+                {
+                    DirectMessageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Text = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
+                    UserIdToId = table.Column<string>(type: "varchar(255)", nullable: true),
+                    UserIdFromId = table.Column<string>(type: "varchar(255)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DirectMessages", x => x.DirectMessageId);
+                    table.ForeignKey(
+                        name: "FK_DirectMessages_AspNetUsers_UserIdFromId",
+                        column: x => x.UserIdFromId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DirectMessages_AspNetUsers_UserIdToId",
+                        column: x => x.UserIdToId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Topics",
                 columns: table => new
                 {
@@ -210,31 +220,6 @@ namespace FullStackAuth_WebAPI.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "DirectMessageUser",
-                columns: table => new
-                {
-                    DirectMessagesDirectMessageId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<string>(type: "varchar(255)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DirectMessageUser", x => new { x.DirectMessagesDirectMessageId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_DirectMessageUser_AspNetUsers_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DirectMessageUser_DirectMessages_DirectMessagesDirectMessage~",
-                        column: x => x.DirectMessagesDirectMessageId,
-                        principalTable: "DirectMessages",
-                        principalColumn: "DirectMessageId",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -272,8 +257,8 @@ namespace FullStackAuth_WebAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "625d12ed-1968-4efa-92d1-47a301028927", null, "User", "USER" },
-                    { "8d13e966-2cc9-42df-9660-6d7802294a7c", null, "Admin", "ADMIN" }
+                    { "0575f1a3-2f78-42a5-9391-1a8c8f1c8dd8", null, "Admin", "ADMIN" },
+                    { "17775a09-b2b1-434f-90b2-5d0ebca757f5", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -324,9 +309,14 @@ namespace FullStackAuth_WebAPI.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DirectMessageUser_UsersId",
-                table: "DirectMessageUser",
-                column: "UsersId");
+                name: "IX_DirectMessages_UserIdFromId",
+                table: "DirectMessages",
+                column: "UserIdFromId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DirectMessages_UserIdToId",
+                table: "DirectMessages",
+                column: "UserIdToId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Topics_UserId",
@@ -356,16 +346,13 @@ namespace FullStackAuth_WebAPI.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "DirectMessageUser");
+                name: "DirectMessages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Topics");
-
-            migrationBuilder.DropTable(
-                name: "DirectMessages");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

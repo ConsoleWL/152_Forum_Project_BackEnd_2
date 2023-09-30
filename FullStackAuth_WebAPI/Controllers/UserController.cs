@@ -134,8 +134,13 @@ namespace FullStackAuth_WebAPI.Controllers
             }
         }
 
-        [HttpGet("mess"), Authorize]
-        public IActionResult Get()
+
+        
+
+        //doesn't work
+
+        [HttpGet("mess/{idfrom}"), Authorize]
+        public IActionResult GetMessages(string idfrom)
         {
             try
             {
@@ -143,7 +148,8 @@ namespace FullStackAuth_WebAPI.Controllers
                 if (string.IsNullOrEmpty(userId))
                     return Unauthorized();
 
-                var messages = _context.DirectMessages.Where(m => m.UserIdTo == userId).ToList();
+                var messages = _context.DirectMessages
+                    .Where((m => m.UserIdToId == userId && m.UserIdFromId == idfrom)).ToList();
 
                 return Ok(messages);
 

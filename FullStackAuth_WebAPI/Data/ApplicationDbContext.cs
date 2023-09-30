@@ -2,6 +2,7 @@
 using FullStackAuth_WebAPI.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace FullStackAuth_WebAPI.Data
 {
@@ -23,6 +24,18 @@ namespace FullStackAuth_WebAPI.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new RolesConfiguration());
+
+            modelBuilder.Entity<DirectMessage>()
+                    .HasOne(m => m.UserIdFrom)
+                    .WithMany(t => t.DirectMessagesFrom)
+                    .HasForeignKey(m => m.UserIdFromId);
+
+
+            modelBuilder.Entity<DirectMessage>()
+                        .HasOne(m => m.UserIdTo)
+                        .WithMany(t => t.DirectMessagesTo)
+                        .HasForeignKey(m => m.UserIdToId);
+                        
         }
     }
 }

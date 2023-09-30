@@ -1,4 +1,5 @@
-﻿using FullStackAuth_WebAPI.Data;
+﻿using AutoMapper.Configuration.Conventions;
+using FullStackAuth_WebAPI.Data;
 using FullStackAuth_WebAPI.DataTransferObjects;
 using FullStackAuth_WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -208,6 +209,28 @@ namespace FullStackAuth_WebAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("like/{id}"), Authorize]
+        public IActionResult Like(int id)
+        {
+            try
+            {
+                var topic = _context.Topics.FirstOrDefault(t => t.TopicId == id);
+                if (topic is null)
+                    return NotFound();
+
+                topic.Likes++;
+
+                _context.SaveChanges();
+
+                return Ok(topic.Likes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+
             }
         }
     }
