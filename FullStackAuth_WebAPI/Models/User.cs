@@ -15,7 +15,8 @@ namespace FullStackAuth_WebAPI.Models
 
         public List<Topic> Topics { get; set; }
         public List<Comment> Comments{ get; set; }
-        public List<DirectMessage> DirectMessages { get; set; }
+        public List<DirectMessage> DirectMessagesFrom { get; set; }
+        public List<DirectMessage> DirectMessagesTo { get; set; }
     }
 }
 

@@ -28,7 +28,7 @@ namespace FullStackAuth_WebAPI.Controllers
                 if (string.IsNullOrEmpty(userId))
                     return Unauthorized();
 
-                directMessage.UserIdFrom = userId;
+                directMessage.UserIdFromId = userId;
 
                 _context.DirectMessages.Add(directMessage);
                 if (!ModelState.IsValid)

@@ -143,5 +143,28 @@ namespace FullStackAuth_WebAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPut("like/{id}"), Authorize]
+        public IActionResult LikeMessages(int id)
+        {
+            try
+            {
+                var message = _context.Comments.FirstOrDefault(c => c.CommentId == id);
+
+                if (message is null) 
+                    return NotFound(); 
+
+                message.Likes++;
+
+                _context.SaveChanges();
+
+                return Ok(message.Likes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
