@@ -38,6 +38,20 @@ namespace FullStackAuth_WebAPI.Controllers
             }
         }
 
+        [HttpGet("topic/{topicId}")]
+        public IActionResult GetComments(int topicId)
+        {
+            try
+            {
+                var comments = _context.Comments.Where(c => c.TopicId == topicId).ToList();
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost, Authorize]
         public IActionResult Post([FromBody] Comment comment)
         {
