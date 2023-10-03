@@ -28,9 +28,40 @@ namespace FullStackAuth_WebAPI.Controllers
             try
             {
                 var comments = _context.Comments.Where(c => c.UserId == userId).ToList();
-
                 
+
+
+
                 return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("usercomments/{userId}")]
+        public IActionResult GetCommentsByUserID(string userId)
+        {
+            try
+            {
+                var comments = _context.Comments.Include(u=>u.User).Where(c => c.UserId == userId).ToList();
+
+                var commentsDto = comments.Select(c => new CommentsForDisplayDto
+                {
+                    CommentId = c.CommentId,
+                    Text = c.Text,
+                    TimePosted = c.TimePosted,
+                    Likes = c.Likes,
+                    User = new UserNameDto
+                    {
+                        UserName = c.User.UserName
+                    }
+                }).ToList();
+
+
+
+                return Ok(commentsDto);
             }
             catch (Exception ex)
             {
@@ -43,8 +74,21 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-                var comments = _context.Comments.Where(c => c.TopicId == topicId).ToList();
-                return Ok(comments);
+                var comments = _context.Comments.Include(u => u.User).Where(c => c.TopicId == topicId).ToList();
+
+                var commentsDto = comments.Select(c => new CommentsForDisplayDto
+                {
+                    CommentId = c.CommentId,
+                    Text = c.Text,
+                    TimePosted = c.TimePosted,
+                    Likes = c.Likes,
+                    User = new UserNameDto
+                    {
+                        UserName = c.User.UserName
+                    }
+                }).ToList();
+
+                return Ok(commentsDto);
             }
             catch (Exception ex)
             {
@@ -151,8 +195,8 @@ namespace FullStackAuth_WebAPI.Controllers
             {
                 var message = _context.Comments.FirstOrDefault(c => c.CommentId == id);
 
-                if (message is null) 
-                    return NotFound(); 
+                if (message is null)
+                    return NotFound();
 
                 message.Likes++;
 

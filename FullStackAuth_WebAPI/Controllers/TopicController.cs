@@ -21,6 +21,52 @@ namespace FullStackAuth_WebAPI.Controllers
             _context = context;
         }
 
+
+        [HttpGet("user/{userId}")]
+        public IActionResult GetTopicsByUserId(string userId)
+        {
+            try
+            {
+                List<Topic> topics = _context.Topics.Include(u => u.User)
+                                                    .Include(c => c.Comments)
+                                                    .ThenInclude(c => c.User)
+                                                    .Where(u=>u.UserId == userId)
+                                                    .ToList();
+
+
+                var topicsDto = topics.Select(t => new TopicsForDisplayDto
+                {
+                    TopicId = t.TopicId,
+                    Title = t.Title,
+                    TimePosted = t.TimePosted,
+                    Likes = t.Likes,
+                    Text = t.Text,
+                    User = new UserNameDto
+                    {
+                        UserName = t.User.UserName
+                    },
+                    Comments = t.Comments.Select(c => new CommentsForDisplayDto
+                    {
+                        CommentId = c.CommentId,
+                        Likes = c.Likes,
+                        Text = c.Text,
+                        TimePosted = c.TimePosted,
+                        User = new UserNameDto
+                        {
+                            UserName = c.User.UserName
+                        }
+                    }).ToList()
+
+                }).ToList();
+
+                return Ok(topicsDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -118,6 +164,8 @@ namespace FullStackAuth_WebAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        
 
         [HttpPost, Authorize]
         public IActionResult Post([FromBody] Topic topic)
