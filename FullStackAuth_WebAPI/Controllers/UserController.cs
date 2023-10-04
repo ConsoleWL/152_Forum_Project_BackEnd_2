@@ -135,6 +135,63 @@ namespace FullStackAuth_WebAPI.Controllers
         }
 
 
+        [HttpGet("username/{userName}")]
+        public IActionResult GetUserByUserName(string userName)
+        {
+            try
+            {
+                var user = _context.Users.Include(t => t.Topics)
+                                    .Include(c => c.Comments)
+                                    .FirstOrDefault(u => u.UserName == userName);
+
+                if (user is null)
+                    return NotFound();
+
+                var topics = _context.Topics.Include(u => u.User).Where(u => u.UserId == user.Id).ToList();
+                var comments = _context.Comments.Where(u => u.UserId == user.Id).ToList();
+
+                var userDto = new UserForDisplayDto
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Likes = user.Likes,
+                    RegistrationData = user.RegistrationDate,
+                    ProfilePicture = user.ProfilePicture,
+                    Topics = topics.Select(t => new TopicsForDisplayDto
+                    {
+                        TopicId = t.TopicId,
+                        Title = t.Title,
+                        TimePosted = t.TimePosted,
+                        Likes = t.Likes,
+                        Text = t.Text,
+                        User = new UserNameDto
+                        {
+                            UserName = t.User.UserName
+                        }
+                        
+                    }).ToList(),
+                    Comments = comments.Select(c => new CommentsForDisplayDto
+                    {
+                        CommentId = c.CommentId,
+                        Text = c.Text,
+                        TimePosted = c.TimePosted,
+                        Likes = c.Likes,
+                        User = new UserNameDto
+                        {
+                            UserName = c.User.UserName
+                        },
+
+                    }).ToList()
+                };
+
+                return Ok(userDto);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
         
 
         //doesn't work
