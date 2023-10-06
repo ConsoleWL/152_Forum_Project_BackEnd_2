@@ -106,6 +106,7 @@ namespace FullStackAuth_WebAPI.Controllers
                     return Unauthorized();
 
                 comment.UserId = userId;
+                comment.TimePosted = DateTime.Now;
 
                 _context.Comments.Add(comment);
                 if (!ModelState.IsValid)

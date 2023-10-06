@@ -177,6 +177,7 @@ namespace FullStackAuth_WebAPI.Controllers
                     return Unauthorized();
 
                 topic.UserId = userId;
+                topic.TimePosted = DateTime.Now;
 
                 _context.Topics.Add(topic);
                 if (!ModelState.IsValid)
