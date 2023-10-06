@@ -48,6 +48,33 @@ namespace FullStackAuth_WebAPI.Controllers
             }
         }
 
+        [HttpGet("messages/{userFromId}"), Authorize]
+        public IActionResult GetMessagesOfUser(string userFromId)
+        {
+            try
+            {
+                string userId = User.FindFirstValue("id");
+                if (string.IsNullOrEmpty(userId))
+                    return Unauthorized();
+
+
+                var myMessages = _context.DirectMessages.Where(ufrom => ufrom.UserIdFromId == userId && ufrom.UserIdToId == userFromId).ToList();
+
+                var userMessages = _context.DirectMessages.Where(ufrom => ufrom.UserIdToId == userId && ufrom.UserIdFromId == userFromId).ToList();
+
+                myMessages.AddRange(userMessages);
+
+                myMessages.Sort(new DirectMessageDateComparer());
+
+                return Ok(myMessages);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
         [HttpPost, Authorize]
         public IActionResult Post([FromBody] DirectMessage directMessage)
         {

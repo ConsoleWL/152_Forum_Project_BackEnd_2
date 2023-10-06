@@ -24,4 +24,18 @@ namespace FullStackAuth_WebAPI.Models
        
 
     }
+
+    public class DirectMessageDateComparer : IComparer<DirectMessage>
+    {
+        public int Compare(DirectMessage p1, DirectMessage p2)
+        {
+            if (p1.MessageTime > p2.MessageTime)
+                return 1;
+            else if (p1.MessageTime < p2.MessageTime)
+                return -1;
+            else
+                return 0;
+        }
+    }
 }
+
