@@ -48,8 +48,11 @@ namespace FullStackAuth_WebAPI.Controllers
             }
         }
 
+<<<<<<< HEAD
         
 
+=======
+>>>>>>> 045be49e2bf7a03aa802046d718a730a45dba0e2
 
         [HttpPost, Authorize]
         public IActionResult Post([FromBody] DirectMessage directMessage)
