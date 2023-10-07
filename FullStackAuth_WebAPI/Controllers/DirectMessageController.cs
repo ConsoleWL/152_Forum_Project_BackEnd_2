@@ -4,6 +4,7 @@ using FullStackAuth_WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace FullStackAuth_WebAPI.Controllers
@@ -61,12 +62,24 @@ namespace FullStackAuth_WebAPI.Controllers
                 var myMessages = _context.DirectMessages.Where(ufrom => ufrom.UserIdFromId == userId && ufrom.UserIdToId == userFromId).ToList();
 
                 var userMessages = _context.DirectMessages.Where(ufrom => ufrom.UserIdToId == userId && ufrom.UserIdFromId == userFromId).ToList();
-
+                
                 myMessages.AddRange(userMessages);
 
                 myMessages.Sort(new DirectMessageDateComparer());
 
-                return Ok(myMessages);
+                var direcMessagesDto = myMessages.Select(m => new DirectMessageDto
+                {
+                    DirectMessageId = m.DirectMessageId,
+                    Text = m.Text,
+                    MessageTime = m.MessageTime,
+                    UserIdFromId = m.UserIdFromId,
+                    UserIdFromName = _context.Users.FirstOrDefault(u=>u.Id == m.UserIdFromId).UserName,
+                    UserIdToId = m.UserIdToId,
+                    UserIdToName = _context.Users.FirstOrDefault(u=>u.Id == m.UserIdToId).UserName
+
+                }).ToList();
+
+                return Ok(direcMessagesDto);
             }
             catch (Exception ex)
             {
